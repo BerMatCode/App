@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [RomanticLetter::class], version = 1, exportSchema = false)
+@Database(entities = [ScanResult::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun romanticLetterDao(): RomanticLetterDao
+    abstract fun scanResultDao(): ScanResultDao
 
     companion object {
         @Volatile
@@ -18,11 +18,10 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "bermatcode_database"
+                    "bermatscanner_database"
                 )
                 .fallbackToDestructiveMigration()
                 .build()
-                @Suppress("ALIGN_SHIFT")
                 INSTANCE = instance
                 instance
             }

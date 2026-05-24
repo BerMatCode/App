@@ -2,6 +2,7 @@ package com.example.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
@@ -14,47 +15,63 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.GlassBorder
-import com.example.ui.theme.GlassWhite
-import com.example.ui.theme.NeonPurpleGlow
 
 @Composable
 fun GlassmorphicCard(
     modifier: Modifier = Modifier,
-    borderColor: Color = GlassBorder,
-    glowColor: Color = NeonPurpleGlow.copy(alpha = 0.15f),
-    cornerRadius: Dp = 24.dp,
+    cornerRadius: Dp = 16.dp,
     content: @Composable BoxScope.() -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+
+    // Dynamic background blend colors
+    val bgGradient = if (isDark) {
+        listOf(
+            Color(0x1BFFFFFF), // translucent white highlight
+            Color(0x06FFFFFF)
+        )
+    } else {
+        listOf(
+            Color(0xBFFFFFFF), // opaque milk tint for great reading
+            Color(0x80FFFFFF)
+        )
+    }
+
+    val borderGradient = if (isDark) {
+        listOf(
+            Color(0x2BFFFFFF),
+            Color(0x0AFFFFFF)
+        )
+    } else {
+        listOf(
+            Color(0x52000000),
+            Color(0x14000000)
+        )
+    }
+
+    val shadowColor = if (isDark) {
+        Color(0x12BA00FF) // neon purple soft glow
+    } else {
+        Color(0x12000000)
+    }
+
     Box(
         modifier = modifier
             .shadow(
-                elevation = 16.dp,
+                elevation = 8.dp,
                 shape = RoundedCornerShape(cornerRadius),
-                ambientColor = glowColor,
-                spotColor = glowColor,
+                ambientColor = shadowColor,
+                spotColor = shadowColor,
                 clip = false
             )
             .clip(RoundedCornerShape(cornerRadius))
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        GlassWhite,
-                        GlassWhite.copy(alpha = 0.04f)
-                    )
-                )
-            )
+            .background(brush = Brush.verticalGradient(bgGradient))
             .border(
-                width = 1.2.dp,
-                brush = Brush.radialGradient(
-                    colors = listOf(
-                        borderColor.copy(alpha = 0.8f),
-                        borderColor.copy(alpha = 0.1f)
-                    )
-                ),
+                width = 1.dp,
+                brush = Brush.verticalGradient(borderGradient),
                 shape = RoundedCornerShape(cornerRadius)
             )
-            .padding(18.dp)
+            .padding(16.dp)
     ) {
         content()
     }

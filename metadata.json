@@ -1,6 +1,6 @@
 {
-  "name": "BerMatCode",
-  "description": "Estilo premium con contador en tiempo real, cartas de amor interactivas, frases animadas y partículas románticas de neón.",
+  "name": "BerMatScanner",
+  "description": "Premium real-time QR/Barcode scanner with glassmorphism style, automatic clear/dark mode, and scan history.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
